@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: astrosonix-backend
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: python manage.py migrate --noinput && gunicorn astrovia.wsgi:application --bind 0.0.0.0:$PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
