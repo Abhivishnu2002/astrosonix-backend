@@ -11,14 +11,13 @@ astrovia/db.sqlite3
 __pycache__/
 *.py[cod]
 *$py.class
-astrovia/**/__pycache__/
-astrovia/**/*.py[cod]
+**/__pycache__/
+**/*.py[cod]
 
 # OS generated files
 .DS_Store
 .DS_Store?
-astrovia/.DS_Store
-astrovia/**/.DS_Store
+**/.DS_Store
 ehthumbs.db
 Icon?
 Thumbs.db
