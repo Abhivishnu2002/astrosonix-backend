@@ -15,10 +15,11 @@ class SignUpSerializer(serializers.ModelSerializer):
         }
     )
     full_name = serializers.CharField()
+    email = serializers.EmailField(required=False, allow_blank=True, allow_null=True)
 
     class Meta:
         model = User
-        fields = ['phone_number', 'full_name']
+        fields = ['phone_number', 'full_name', 'email']
 
     def validate_phone_number(self, value):
         if not value.isdigit():
@@ -35,17 +36,24 @@ class SignUpSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         phone = validated_data.pop('phone_number')
         name = validated_data.pop('full_name')
+        email = validated_data.pop('email', None)
         username = phone
 
         # Create user
-        user = User.objects.create_user(username=username, first_name=name)
+        user = User.objects.create_user(username=username, first_name=name, email=email or '')
 
         # Create user profile
-        UserProfile.objects.create(user=user, phone_number=phone, full_name=name)
+        UserProfile.objects.create(user=user, phone_number=phone, full_name=name, email=email)
 
         return user
 
 
 
 class PhoneLoginSerializer(serializers.Serializer):
-    phone_number = serializers.CharField()
+    phone_number = serializers.CharField(required=False)
+    identifier = serializers.CharField(required=False)
+
+    def validate(self, attrs):
+        if not attrs.get('phone_number') and not attrs.get('identifier'):
+            raise serializers.ValidationError("Either phone_number or identifier is required.")
+        return attrs

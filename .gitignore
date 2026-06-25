@@ -1,0 +1,24 @@
+# Sensitive files
+.env
+astrovia/.env
+
+# Local Databases
+*.sqlite3
+db.sqlite3
+astrovia/db.sqlite3
+
+# Python build & cache files
+__pycache__/
+*.py[cod]
+*$py.class
+astrovia/**/__pycache__/
+astrovia/**/*.py[cod]
+
+# OS generated files
+.DS_Store
+.DS_Store?
+astrovia/.DS_Store
+astrovia/**/.DS_Store
+ehthumbs.db
+Icon?
+Thumbs.db

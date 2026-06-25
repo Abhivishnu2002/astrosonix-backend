@@ -124,7 +124,26 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 
-# Default primary key field type
-# https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
-
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# CORS Configuration
+CORS_ALLOW_ALL_ORIGINS = True
+
+# Groq API Configuration
+import os
+try:
+    from decouple import config
+    GROQ_API_KEY = config('GROQ_API_KEY', default=os.environ.get("GROQ_API_KEY", ""))
+    
+    # Message Central Configuration
+    MESSAGE_CENTRAL_CUSTOMER_ID = config('MESSAGE_CENTRAL_CUSTOMER_ID', default="")
+    MESSAGE_CENTRAL_KEY = config('MESSAGE_CENTRAL_KEY', default="")
+    MESSAGE_CENTRAL_EMAIL = config('MESSAGE_CENTRAL_EMAIL', default="")
+    MESSAGE_CENTRAL_FLOW_TYPE = config('MESSAGE_CENTRAL_FLOW_TYPE', default="SMS")
+except ImportError:
+    GROQ_API_KEY = os.environ.get("GROQ_API_KEY", "")
+    MESSAGE_CENTRAL_CUSTOMER_ID = os.environ.get("MESSAGE_CENTRAL_CUSTOMER_ID", "")
+    MESSAGE_CENTRAL_KEY = os.environ.get("MESSAGE_CENTRAL_KEY", "")
+    MESSAGE_CENTRAL_EMAIL = os.environ.get("MESSAGE_CENTRAL_EMAIL", "")
+    MESSAGE_CENTRAL_FLOW_TYPE = os.environ.get("MESSAGE_CENTRAL_FLOW_TYPE", "SMS")
+
